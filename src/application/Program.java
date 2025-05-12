@@ -4,6 +4,8 @@ import java.util.Date;
 
 import model.entities.Department;
 import model.entities.Seller;
+import moodel.dao.DaoFactory;
+import moodel.dao.SellerDao;
 
 public class Program {
 
@@ -15,6 +17,10 @@ public class Program {
 		Seller seller = new Seller(1, "Jhon", "jhon.gmail.com", new Date(), 3300.0, obj);
 		
 		System.out.println(seller);
+		
+		SellerDao sellerDao = DaoFactory.createSellerDao();
+		
+		System.out.println(sellerDao);
 
 	}
 

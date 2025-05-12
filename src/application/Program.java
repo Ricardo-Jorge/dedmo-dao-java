@@ -1,8 +1,5 @@
 package application;
 
-import java.util.Date;
-
-import model.entities.Department;
 import model.entities.Seller;
 import moodel.dao.DaoFactory;
 import moodel.dao.SellerDao;
@@ -11,16 +8,12 @@ public class Program {
 
 	public static void main(String[] args) {
 		
-		Department obj = new Department(1, "Books");
-		System.out.println(obj);
-		
-		Seller seller = new Seller(1, "Jhon", "jhon.gmail.com", new Date(), 3300.0, obj);
-		
-		System.out.println(seller);
-		
+				
 		SellerDao sellerDao = DaoFactory.createSellerDao();
 		
-		System.out.println(sellerDao);
+		Seller seller = sellerDao.findById(7);
+		
+		System.out.println(seller);
 
 	}
 

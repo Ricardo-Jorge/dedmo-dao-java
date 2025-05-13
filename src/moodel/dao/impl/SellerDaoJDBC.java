@@ -64,28 +64,24 @@ public class SellerDaoJDBC implements SellerDao {
 
 	@Override
 	public void update(Seller obj) {
-		
+
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("UPDATE seller\r\n"
-					+ "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ?\r\n"
-					+ "WHERE Id = ?");
+					+ "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ?\r\n" + "WHERE Id = ?");
 			st.setString(1, obj.getName());
 			st.setString(2, obj.getEmail());
 			st.setDate(3, new java.sql.Date(obj.getBirthDate().getTime()));
 			st.setDouble(4, obj.getBaseSalary());
 			st.setInt(5, obj.getDepartment().getId());
 			st.setInt(6, obj.getId());
-			
+
 			st.executeUpdate();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
-		}
-		finally {
+		} finally {
 			DB.closeStatement(st);
 		}
-		
 
 	}
 
@@ -93,20 +89,23 @@ public class SellerDaoJDBC implements SellerDao {
 	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub
 		PreparedStatement st = null;
-		
+
 		try {
-			st = conn.prepareStatement("DELETE FROM seller\r\n"
-					+ "WHERE Id = ?");
+			st = conn.prepareStatement("DELETE FROM seller\r\n" + "WHERE Id = ?");
 			st.setInt(1, id);
-			
-			st.execute();
-			
-			System.out.println("Done! Deletion executed with success!");					
-		}
-		catch (SQLException e) {
+
+			int rowsAffected = st.executeUpdate();
+
+			if (rowsAffected > 0) {
+				System.out.println("Done! Deletion executed with success!");
+			} else {
+				throw new DbException("Error: Id not found!");
+			}
+
+		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		}
-		
+
 		finally {
 			DB.closeStatement(st);
 		}
